@@ -1,6 +1,6 @@
 from datetime import date
 
-CANDIDATES_PATH = "candidates.jsonl.gz"
+CANDIDATES_PATH = "candidates.jsonl"
 OUTPUT_PATH     = "submission.csv"
 TOP_STAGE1      = 600
 TODAY           = date(2026, 6, 25)
