@@ -1,6 +1,6 @@
 import gzip
 from datetime import datetime
-from config import TODAY
+from config import TODAY, RETRIEVAL_TITLE_KWS
 
 GROUP_LABELS = {
     "embeddings_retrieval": "embeddings/retrieval",
