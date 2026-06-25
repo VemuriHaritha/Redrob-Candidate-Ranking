@@ -135,7 +135,7 @@ def main():
         encoding="utf-8"
     ) as f:
 
-        writer = csv.writer(f)
+        writer = csv.writer(f, quoting=csv.QUOTE_MINIMAL)
 
         writer.writerow(
             ["candidate_id", "rank", "score", "reasoning"]
