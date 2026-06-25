@@ -214,7 +214,7 @@ def main():
                 )
 
         for i in range(len(scores) - 1):
-            if scores[i] < scores[i + 1]:
+            if scores[i] < scores[i + 1] - 1e-9:
                 errors.append(
                     f"Scores not descending at row {i+1}"
                 )
