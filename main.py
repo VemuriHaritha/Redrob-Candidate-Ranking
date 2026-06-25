@@ -1,15 +1,13 @@
 import json
 import csv
+import re
 
 from config import *
 from scoring import *
 from ranking import *
 from utils import *
 
-def open_candidates(path):
-    if path.endswith(".gz"):
-        return gzip.open(path, "rt", encoding="utf-8")
-    return open(path, "r", encoding="utf-8")
+
 def main():
     print("=" * 60)
     print("Redrob Hackathon Candidate Ranker")
@@ -25,6 +23,7 @@ def main():
     print("\n[Stage 1] Candidate Scoring")
 
     with open_candidates(CANDIDATES_PATH) as fh:
+
         for line in fh:
             line = line.strip()
 
@@ -117,6 +116,7 @@ def main():
     top_100 = top_n[:100]
 
     if len(top_100) < 100:
+
         needed = 100 - len(top_100)
 
         fallback.sort(key=lambda x: -x["score"])
@@ -143,7 +143,7 @@ def main():
 
         prev_score = None
 
-        for rank, r in enumerate(top_100, start=1):
+        for rank, r in enumerate(top_100[:100], start=1):
 
             score = r["final"]
 
@@ -152,15 +152,84 @@ def main():
 
             prev_score = score
 
+            reasoning = build_reasoning(
+                r["candidate"],
+                r["matched_must"]
+            )
+
+            reasoning = (
+                reasoning
+                .replace('"', "'")
+                .replace("\n", " ")
+            )
+
             writer.writerow([
                 r["id"],
                 rank,
                 f"{score:.6f}",
-                "Strong profile match"
+                reasoning
             ])
 
     print(f"\nSubmission saved to: {OUTPUT_PATH}")
-    print("Done!")
+
+    print("\n[Validation]")
+
+    errors = []
+
+    with open(
+        OUTPUT_PATH,
+        "r",
+        encoding="utf-8"
+    ) as f:
+
+        reader = csv.reader(f)
+
+        header = next(reader)
+
+        if header != [
+            "candidate_id",
+            "rank",
+            "score",
+            "reasoning"
+        ]:
+            errors.append(
+                f"Invalid header: {header}"
+            )
+
+        rows = list(reader)
+
+        if len(rows) != 100:
+            errors.append(
+                f"Expected 100 rows, got {len(rows)}"
+            )
+
+        scores = []
+
+        for row in rows:
+            try:
+                scores.append(float(row[2]))
+            except Exception:
+                errors.append(
+                    f"Invalid score row: {row}"
+                )
+
+        for i in range(len(scores) - 1):
+            if scores[i] < scores[i + 1]:
+                errors.append(
+                    f"Scores not descending at row {i+1}"
+                )
+
+    if errors:
+
+        print("\nValidation Failed:")
+
+        for err in errors:
+            print("-", err)
+
+    else:
+        print("✓ Output valid")
+
+    print("\nDone!")
 
 
 if __name__ == "__main__":
