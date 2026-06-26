@@ -23,7 +23,7 @@ Each candidate is scored across eight dimensions:
 | Education tier | 3% |
 | Platform assessment scores + salary fit | 6% |
 
-Before scoring, a honeypot detector drops profiles with physically impossible timelines — expert skills with zero usage months, role durations longer than claimed experience, graduation dates that contradict stated years of experience.
+Before scoring, a honeypot detector drops profiles with physically impossible timelines, expert skills with zero usage months, role durations longer than claimed experience, graduation dates that contradict stated years of experience.
 
 A hard gate filters out any candidate whose current title is non-technical (operations manager, marketing manager, HR, etc.) or who matches fewer than 2 must-have skill groups without a retrieval/ML job title. This is the single rule that prevents keyword-stuffed irrelevant profiles from reaching the final shortlist.
 
@@ -89,7 +89,7 @@ CAND_0006557,2,0.988596,"NLP Engineer with 7.9 yrs exp in Jaipur..."
 ...
 ```
 
-Exactly 100 rows. Scores are non-increasing. Each reasoning string references only facts present in the candidate's profile — no inference.
+Exactly 100 rows. Scores are non-increasing. Each reasoning string references only facts present in the candidate's profile, no inference.
 
 ---
 
@@ -114,7 +114,7 @@ Exactly 100 rows. Scores are non-increasing. Each reasoning string references on
 
 **Why career history carries 40% of the weight**
 
-The JD explicitly warns that keyword matching is a trap. An Operations Manager whose skills list includes "RAG" and "Pinecone" is not a fit. A Search Engineer whose job descriptions mention ranking models, A/B testing, and offline-online correlation is a strong fit — even if their profile never uses the word "LLM". Career titles and role descriptions reveal actual work; skills sections are self-reported and often inflated.
+The JD explicitly warns that keyword matching is a trap. An Operations Manager whose skills list includes "RAG" and "Pinecone" is not a fit. A Search Engineer whose job descriptions mention ranking models, A/B testing, and offline-online correlation is a strong fit, even if their profile never uses the word "LLM". Career titles and role descriptions reveal actual work; skills sections are self-reported and often inflated.
 
 **Why TF-IDF as Stage 2 rather than a second rule pass**
 
