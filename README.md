@@ -68,7 +68,7 @@ OUTPUT_PATH     = "submission.csv"
 python main.py
 ```
 
-Works with both `.jsonl` and `.jsonl.gz` input. The gzip file is streamed directly — no need to decompress it first.
+Works with both `.jsonl` and `.jsonl.gz` input. The gzip file is streamed directly, no need to decompress it first.
 
 **Expected runtime:** ~3 minutes on a single CPU core for 100K candidates. Memory stays under 2 GB because candidates are processed line by line, never loaded in bulk.
 
@@ -76,7 +76,7 @@ Works with both `.jsonl` and `.jsonl.gz` input. The gzip file is streamed direct
 
 ## Requirements
 
-Python 3.10 or higher. No external packages — only standard library modules (`json`, `gzip`, `csv`, `math`, `re`, `collections`, `datetime`).
+Python 3.10 or higher. No external packages, only standard library modules (`json`, `gzip`, `csv`, `math`, `re`, `collections`, `datetime`).
 
 ---
 
@@ -118,4 +118,4 @@ The JD explicitly warns that keyword matching is a trap. An Operations Manager w
 
 **Why TF-IDF as Stage 2 rather than a second rule pass**
 
-TF-IDF catches vocabulary variation that keyword lists miss — a candidate who writes "dense vector index" instead of "FAISS" still gets similarity credit against the JD reference text. It also down-weights tokens that appear in almost every candidate's profile, which reduces noise from generic terms like "Python" or "machine learning".
+TF-IDF catches vocabulary variation that keyword lists miss, a candidate who writes "dense vector index" instead of "FAISS" still gets similarity credit against the JD reference text. It also down-weights tokens that appear in almost every candidate's profile, which reduces noise from generic terms like "Python" or "machine learning".
